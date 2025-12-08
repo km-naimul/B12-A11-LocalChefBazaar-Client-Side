@@ -1,9 +1,15 @@
-@import "tailwindcss";
-@plugin "daisyui";
-
+/* Font import ঠিকই ছিল */
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-body{
+/* Tailwind v4 style */
+@import "tailwindcss";
+
+/* DaisyUI plugin v4 style */
+@plugin "daisyui";
+
+/* চাইলে পরে theme আলাদা config দেবে, এখন basic setup রাখি */
+
+body {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;

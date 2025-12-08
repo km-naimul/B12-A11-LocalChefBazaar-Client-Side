@@ -12,7 +12,7 @@ const Logo = () => {
         className="w-10 h-12 object-contain mx-auto" 
     />
     <h3 className="text-2xl font-bold -ms-1">
-        <span className="text-orange-500">Local</span>
+        <span className="text-red-600">Local</span>
         <span className="text-green-700">ChefBazaar</span>
     </h3>
 </div>

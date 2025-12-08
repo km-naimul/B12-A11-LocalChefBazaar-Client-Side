@@ -3,7 +3,7 @@ import Logo from '../../../components/Logo/Logo';
 
 const Footer = () => {
     return (
-        <footer className="footer footer-horizontal footer-center bg-[#fbe0cf] text-base-content rounded p-5">
+        <footer className="footer footer-horizontal footer-center bg-[#fcf1f1] text-base-content rounded p-5">
   <Logo> </Logo>
   
   <nav className="grid grid-flow-col gap-80">

@@ -4,11 +4,11 @@ import { NavLink } from 'react-router';
 
 const Navbar = () => {
     const links = <> 
-         <li className='font-bold'><NavLink to=""> Home </NavLink></li>
-         <li className='font-bold'><NavLink to=""> Meals </NavLink></li>
+         <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Home </NavLink></li>
+         <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Meals </NavLink></li>
     </>
     return (
-        <div className="navbar bg-[#fbe0cf] shadow-sm">
+        <div className="navbar shadow rounded">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -28,8 +28,8 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn btn-outline btn-success">Login</a>
-    <a className="btn btn-warning m-2">Register</a>
+    <a className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8">Login</a>
+    <a className="btn bg-red-600 text-white m-2 hover:bg-red-500 border-round font-semibold w-18 h-8">Register</a>
   </div>
 </div>
     );
