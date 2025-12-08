@@ -79,8 +79,8 @@ const Banner = () => {
                 </Carousel>
             </div>
 
-            <div className=' bg-amber-300'>
-                <h3 className='text-center text-[20px] font-bold text-gray-500 bg-white'>
+            <div className=' bg-gray-50'>
+                <h3 className='text-center text-[20px] font-bold text-gray-500 '>
                     Our Satisfied Customer&apos;s
                 </h3>
 

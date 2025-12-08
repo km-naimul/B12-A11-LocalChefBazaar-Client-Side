@@ -6,12 +6,12 @@ const Footer = () => {
         <footer className="footer footer-horizontal footer-center bg-[#fcf1f1] text-base-content rounded p-5">
   <Logo> </Logo>
   
-  <nav className="grid grid-flow-col gap-80">
+  <nav className="grid grid-flow-col gap-60 font-bold">
     
     <a className="link link-hover">About us</a>
-    <a className="link link-hover">Contact</a>
-    <a className="link link-hover">Jobs</a>
-    <a className="link link-hover">Press kit</a>
+    <a className="link link-hover">Contact Details</a>
+    <a className="link link-hover">Working Hours</a>
+    <a className="link link-hover">Terms & conditions</a>
   </nav>
   <nav>
     <div className="grid grid-flow-col gap-5">
@@ -51,7 +51,7 @@ const Footer = () => {
     </div>
   </nav>
   <aside>
-    <p>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
+    <p>Copyright © {new Date().getFullYear()} - All right reserved by ChefBazaar Industries Ltd</p>
   </aside>
 </footer>
     );
