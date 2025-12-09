@@ -5,7 +5,7 @@ import { NavLink } from 'react-router';
 const Navbar = () => {
     const links = <> 
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Home </NavLink></li>
-         <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Meals </NavLink></li>
+         <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/meals"> Meals </NavLink></li>
     </>
     return (
         <div className="navbar shadow rounded">
