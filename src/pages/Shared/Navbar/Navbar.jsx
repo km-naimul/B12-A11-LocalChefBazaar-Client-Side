@@ -1,8 +1,20 @@
 import React from 'react';
 import Logo from '../../../components/Logo/Logo';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+
+  const{user, logOut} = useAuth();
+
+  const handleLogOut = () =>{
+    logOut()
+    .then()
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
     const links = <> 
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Home </NavLink></li>
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/meals"> Meals </NavLink></li>
@@ -28,7 +40,11 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8">Login</a>
+      {
+        user? <a onClick={handleLogOut} className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8">LogOut</a> : <Link className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8" to="/login"> Login</Link>
+        
+      }
+
     <a className="btn bg-red-600 text-white m-2 hover:bg-red-500 border-round font-semibold w-18 h-8">Register</a>
   </div>
 </div>
