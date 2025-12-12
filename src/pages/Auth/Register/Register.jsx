@@ -2,7 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import Swal from "sweetalert2";
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
+import axios from 'axios';
 
 const Register = () => {
   const {
@@ -11,7 +12,11 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log('in register', location)
+
 
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
@@ -28,12 +33,34 @@ const Register = () => {
       status: "active",   // Requirement অনুযায়ী
     };
 
-    console.log("User Registered Data ->", userData);
+    console.log("User Registered Data ->", userData, data.profileImage[0]
+);
+    const profileImg = data.profileImage[0];
+
 
     // Firebase Authentication
     registerUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        const formData = new FormData();
+        formData.append('image', profileImg);
+        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+        axios.post(image_API_URL, formData)
+        .then(res =>{
+            console.log('after image upload', res.data.data.url)
+
+            const userProfile = {
+                displayName : data.name,
+                photoURL : res.data.data.url
+            }
+            updateUserProfile(userProfile)
+            .then(()=>{
+                console.log('user profile updated done')
+                navigate(location.state || '/');
+            })
+            .catch(error => console.log(error))
+        })
+
         Swal.fire("Success", "Account Created Successfully!", "success");
       })
       .catch((error) => console.log(error));
@@ -74,11 +101,11 @@ const Register = () => {
 
         {/* Profile Image URL */}
         <div>
-          <label className="label text-sm font-medium">Profile Image URL</label>
-          <input
+          <label className="label text-sm font-medium">Profile Image</label>
+          <input type="file"
             {...register("profileImage", { required: true })}
-            className="input input-bordered w-full"
-            placeholder="https://image-link.com/photo.jpg"
+            className="file-input input-bordered w-full"
+            placeholder="Please Upload a photo"
           />
           {errors.profileImage && <p className="text-xs text-red-500">Profile image link required*</p>}
         </div>
@@ -124,7 +151,9 @@ const Register = () => {
         </button>
 
         <p className="mt-4 text-center text-xs text-gray-500">
-                Already have an account? <Link to="/login" className="text-red-500 font-medium">Please Login</Link>
+                Already have an account? <Link
+                state={location.state}
+                to="/login" className="text-red-500 font-medium">Please Login</Link>
               </p>
       </form>
     </div>

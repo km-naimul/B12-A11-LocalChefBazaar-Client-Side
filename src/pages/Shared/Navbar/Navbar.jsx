@@ -18,6 +18,8 @@ const Navbar = () => {
     const links = <> 
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to=""> Home </NavLink></li>
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/meals"> Meals </NavLink></li>
+         <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/create-meal">Create Meal</NavLink></li>
+
     </>
     return (
         <div className="navbar shadow rounded">
@@ -41,11 +43,11 @@ const Navbar = () => {
   </div>
   <div className="navbar-end">
       {
-        user? <a onClick={handleLogOut} className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8">LogOut</a> : <Link className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8" to="/login"> Login</Link>
-        
+        user? <a onClick={handleLogOut} className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8">Logout</a> : <Link className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8" to="/login"> Login</Link>        
       }
 
-    <a className="btn bg-red-600 text-white m-2 hover:bg-red-500 border-round font-semibold w-18 h-8">Register</a>
+      <Link className="btn btn-outline hover:bg-red-200 text-red-600 font-semibold w-18 h-8 mx-2" to="/register"> Register </Link>
+    
   </div>
 </div>
     );

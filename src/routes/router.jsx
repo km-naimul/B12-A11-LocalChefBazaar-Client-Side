@@ -7,6 +7,8 @@ import OrderPage from "../pages/Order/Order";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import PrivateRoute from "./PrivateRoute";
+import CreateMeal from "../pages/CreateMeal/CreateMeal";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +18,10 @@ export const router = createBrowserRouter([
         {
             index: true,
             Component: Home
+        },
+        {
+            path: 'create-meal',
+            element: <PrivateRoute> <CreateMeal> </CreateMeal> </PrivateRoute>
         },
         {
           path: 'meals',
