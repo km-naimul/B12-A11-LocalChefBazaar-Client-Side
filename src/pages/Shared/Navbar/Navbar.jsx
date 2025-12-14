@@ -20,6 +20,12 @@ const Navbar = () => {
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/meals"> Meals </NavLink></li>
          <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/create-meal">Create Meal</NavLink></li>
 
+         {
+            user && <> 
+      <li className='font-semibold text-red-600 text-[20px]'><NavLink to="/dashboard/my-meals">My Meals</NavLink></li>
+            </>
+         }
+
     </>
     return (
         <div className="navbar shadow rounded">
