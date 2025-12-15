@@ -41,7 +41,15 @@ const DashboardLayout = () => {
             </NavLink>
 
         </li>
+        {/*my-orders links */}
 
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Orders" to="/dashboard/my-orders">
+             <IoFastFoodSharp />
+            <span className="is-drawer-close:hidden">My Orders</span>
+            </NavLink>
+        </li>
+        
 
         {/* List item */}
         <li>

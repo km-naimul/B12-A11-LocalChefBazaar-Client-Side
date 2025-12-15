@@ -12,6 +12,9 @@ import CreateMeal from "../pages/CreateMeal/CreateMeal";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyMeals from "../pages/Dashboard/MyMeals/MyMeals";
 import UpdateMeal from "../pages/UpdateMeal/UpdateMeal";
+import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
+import Payment from "../pages/Dashboard/Payment/Payment";
+
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +81,14 @@ export const router = createBrowserRouter([
         path: "update-meal/:id",
         Component: UpdateMeal,
       },
+      {
+        path: 'my-orders',
+        Component: MyOrders,
+      },
+      {
+        path: 'payment/:orderId',
+        Component: Payment,
+      }
     ],
   },
 ]);
