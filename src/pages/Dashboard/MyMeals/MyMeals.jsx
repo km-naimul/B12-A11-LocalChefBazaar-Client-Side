@@ -11,7 +11,7 @@ const MyMeals = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: meals = [] } = useQuery({
+  const { data: meals = [], refetch } = useQuery({
     queryKey: ['myMeals', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/createMeals?email=${user.email}`);
@@ -31,6 +31,7 @@ const MyMeals = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        refetch();
         axiosSecure.delete(`/createMeals/${id}`)
           .then(res => {
             if (res.data.deletedCount > 0) {
