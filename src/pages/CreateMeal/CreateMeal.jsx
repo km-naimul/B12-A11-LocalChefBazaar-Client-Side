@@ -56,8 +56,17 @@ const CreateMeal = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure.post("/createMeals", mealData).then(() => {
-            Swal.fire("Created!", "Meal added successfully.", "success");
+            Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Create a meal successfully.",
+  showConfirmButton: false,
+  timer: 1500
+});
           });
+
+          
+
         }
       });
     } catch (error) {

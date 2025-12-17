@@ -14,6 +14,8 @@ import MyMeals from "../pages/Dashboard/MyMeals/MyMeals";
 import UpdateMeal from "../pages/UpdateMeal/UpdateMeal";
 import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/Payment/paymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 
 
 export const router = createBrowserRouter([
@@ -88,6 +90,14 @@ export const router = createBrowserRouter([
       {
         path: 'payment/:orderId',
         Component: Payment,
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
+      },
+      {
+        path: 'payment-cancelled',
+        Component: PaymentCancelled
       }
     ],
   },
