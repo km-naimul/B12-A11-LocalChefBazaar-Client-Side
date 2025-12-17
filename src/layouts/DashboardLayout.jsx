@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaMoneyCheck } from 'react-icons/fa';
 import { IoFastFoodSharp } from 'react-icons/io5';
 import { Link, NavLink, Outlet } from 'react-router';
 
@@ -38,6 +39,14 @@ const DashboardLayout = () => {
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Meals" to="/dashboard/my-meals">
              <IoFastFoodSharp />
             <span className="is-drawer-close:hidden">My Meals</span>
+            </NavLink>
+
+        </li>
+        {/* Payment history*/}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history" to="/dashboard/payment-history">
+             <FaMoneyCheck />
+            <span className="is-drawer-close:hidden">Payment history</span>
             </NavLink>
 
         </li>
