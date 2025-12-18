@@ -4,6 +4,7 @@ import useAuth from '../../../hooks/useAuth';
 import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
   const {
@@ -15,7 +16,7 @@ const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log('in register', location)
+  const axiosSecure = useAxiosSecure();
 
 
   const onSubmit = (data) => {
@@ -40,18 +41,33 @@ const Register = () => {
 
     // Firebase Authentication
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        
+
         const formData = new FormData();
         formData.append('image', profileImg);
         const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
         axios.post(image_API_URL, formData)
         .then(res =>{
-            console.log('after image upload', res.data.data.url)
+            const photoURL = res.data.data.url;
 
+            // create user in the database
+           const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL : photoURL
+           } 
+          axiosSecure.post('/users', userInfo)
+          .then(res =>{
+            if(res.data.insertedId){
+              console.log('user created in the database')
+            }
+          })
+
+            // update user profile to firebase
             const userProfile = {
                 displayName : data.name,
-                photoURL : res.data.data.url
+                photoURL : photoURL
             }
             updateUserProfile(userProfile)
             .then(()=>{

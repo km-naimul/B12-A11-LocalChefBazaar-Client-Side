@@ -1,6 +1,8 @@
 import React from 'react';
-import { FaMoneyCheck } from 'react-icons/fa';
+import { FaMoneyCheck, FaUsers } from 'react-icons/fa';
+import { ImProfile } from 'react-icons/im';
 import { IoFastFoodSharp } from 'react-icons/io5';
+import { MdManageAccounts } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 
 const DashboardLayout = () => {
@@ -36,6 +38,14 @@ const DashboardLayout = () => {
 
             {/* Our dashboard links */}
         <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Profile" to="/dashboard/my-profile">
+             <ImProfile />
+            <span className="is-drawer-close:hidden">My Profile</span>
+            </NavLink>
+
+        </li>
+            {/* Our dashboard links */}
+        <li> 
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Meals" to="/dashboard/my-meals">
              <IoFastFoodSharp />
             <span className="is-drawer-close:hidden">My Meals</span>
@@ -56,6 +66,18 @@ const DashboardLayout = () => {
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Orders" to="/dashboard/my-orders">
              <IoFastFoodSharp />
             <span className="is-drawer-close:hidden">My Orders</span>
+            </NavLink>
+        </li>
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Requests" to="/dashboard/manage-requests">
+             <MdManageAccounts />
+            <span className="is-drawer-close:hidden">Manage Requests</span>
+            </NavLink>
+        </li>
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip=" Manage Users" to="/dashboard/manage-users">
+             <FaUsers />
+            <span className="is-drawer-close:hidden">Manage Users</span>
             </NavLink>
         </li>
         

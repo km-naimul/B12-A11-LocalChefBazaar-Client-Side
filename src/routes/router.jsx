@@ -17,6 +17,9 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/paymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import Myprofile from "../pages/Dashboard/MyProfile/Myprofile";
+import ManageRequest from "../pages/Dashboard/ManageRequest/ManageRequest";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 
 
 export const router = createBrowserRouter([
@@ -98,12 +101,24 @@ export const router = createBrowserRouter([
       },
       {
         path: 'payment-success',
-        Component: PaymentSuccess
+        Component: PaymentSuccess,
       },
       {
         path: 'payment-cancelled',
-        Component: PaymentCancelled
-      }
+        Component: PaymentCancelled,
+      },
+      {
+        path: 'my-profile',
+       Component: Myprofile, 
+      },
+      {
+        path: 'manage-requests',
+        Component: ManageRequest,
+      },
+      {
+        path: 'manage-users',
+        Component: ManageUsers
+      },
     ],
   },
 ]);
