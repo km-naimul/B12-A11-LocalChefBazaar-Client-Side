@@ -20,6 +20,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Myprofile from "../pages/Dashboard/MyProfile/Myprofile";
 import ManageRequest from "../pages/Dashboard/ManageRequest/ManageRequest";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoutes from "./AdminRoutes";
 
 
 export const router = createBrowserRouter([
@@ -113,11 +114,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'manage-requests',
-        Component: ManageRequest,
+        element: <AdminRoutes> <ManageRequest> </ManageRequest> </AdminRoutes>
       },
       {
-        path: 'manage-users',
-        Component: ManageUsers
+        path: 'manage-users',     
+        element: <AdminRoutes> <ManageUsers></ManageUsers> </AdminRoutes>
       },
     ],
   },

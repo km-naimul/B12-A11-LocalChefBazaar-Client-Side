@@ -4,8 +4,10 @@ import { ImProfile } from 'react-icons/im';
 import { IoFastFoodSharp } from 'react-icons/io5';
 import { MdManageAccounts } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
+    const {role} = useRole();
     return (
         <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -68,7 +70,9 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">My Orders</span>
             </NavLink>
         </li>
-        <li> 
+        {
+            role === 'admin' && <>
+            <li> 
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Requests" to="/dashboard/manage-requests">
              <MdManageAccounts />
             <span className="is-drawer-close:hidden">Manage Requests</span>
@@ -80,6 +84,9 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Manage Users</span>
             </NavLink>
         </li>
+            
+            </>
+        }
         
 
         {/* List item */}

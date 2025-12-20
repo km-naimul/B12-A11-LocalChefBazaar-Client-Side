@@ -14,7 +14,49 @@ const ManageUsers = () => {
     },
   });
 
-  // ✅ MAKE FRAUD HANDLER
+  // ✅ MAKE ADMIN
+  const handleMakeAdmin = async (user) => {
+    const confirm = await Swal.fire({
+      title: "Make Admin?",
+      text: `${user.displayName} will become Admin`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    const roleInfo = { role: "admin" };
+
+    await axiosSecure.patch(`/users/${user._id}/role`, roleInfo);
+
+    Swal.fire("Success", "User promoted to Admin!", "success");
+
+    queryClient.invalidateQueries(["users"]);
+  };
+
+  // ✅ REMOVE ADMIN
+  const handleRemoveAdmin = async (user) => {
+    const confirm = await Swal.fire({
+      title: "Remove Admin?",
+      text: `${user.displayName} will be downgraded to USER`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    const roleInfo = { role: "user" };
+
+    await axiosSecure.patch(`/users/${user._id}/role`, roleInfo);
+
+    Swal.fire("Success", "Admin role removed!", "success");
+
+    queryClient.invalidateQueries(["users"]);
+  };
+
+  // ✅ MAKE FRAUD
   const handleMakeFraud = async (user) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -64,13 +106,11 @@ const ManageUsers = () => {
                         <img src={user.photoURL} alt="user avatar" />
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold">{user.displayName}</div>
-                    </div>
+                    <div className="font-bold">{user.displayName}</div>
                   </div>
                 </td>
 
-                <td className="font-medium">{user.email}</td>
+                <td>{user.email}</td>
 
                 <td className="capitalize font-semibold">{user.role}</td>
 
@@ -86,17 +126,35 @@ const ManageUsers = () => {
                   </span>
                 </td>
 
-                <td>
-                  {/* ✅ SHOW BUTTON CONDITION */}
-                  {user.role !== "admin" && user.status !== "fraud" ? (
+                <td className="space-x-1">
+                  {/* ADMIN ROLE ACTION */}
+                  {user.role === "admin" ? (
                     <button
-                      onClick={() => handleMakeFraud(user)}
-                      className="btn btn-xs bg-red-500 text-white"
+                      onClick={() => handleRemoveAdmin(user)}
+                      className="btn btn-xs bg-yellow-500 text-black"
                     >
-                      Make Fraud
+                      Remove Admin
                     </button>
                   ) : (
-                    <span className="text-xs text-gray-400">N/A</span>
+                    <>
+                      {/* MAKE ADMIN */}
+                      <button
+                        onClick={() => handleMakeAdmin(user)}
+                        className="btn btn-xs bg-blue-500 text-white"
+                      >
+                        Make Admin
+                      </button>
+
+                      {/* MAKE FRAUD */}
+                      {user.status !== "fraud" && (
+                        <button
+                          onClick={() => handleMakeFraud(user)}
+                          className="btn btn-xs bg-red-500 text-white ml-1"
+                        >
+                          Make Fraud
+                        </button>
+                      )}
+                    </>
                   )}
                 </td>
               </tr>
