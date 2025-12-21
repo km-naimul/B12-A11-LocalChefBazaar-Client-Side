@@ -46,14 +46,7 @@ const DashboardLayout = () => {
             </NavLink>
 
         </li>
-            {/* Our dashboard links */}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Meals" to="/dashboard/my-meals">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">My Meals</span>
-            </NavLink>
-
-        </li>
+           
         {/* Payment history*/}
         <li> 
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history" to="/dashboard/payment-history">
@@ -62,6 +55,36 @@ const DashboardLayout = () => {
             </NavLink>
 
         </li>
+
+        {/* My Review*/}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Review" to="/dashboard/my-review">
+             <FaMoneyCheck />
+            <span className="is-drawer-close:hidden">My Review</span>
+            </NavLink>
+        </li>
+
+        {/* Favorite Meal*/}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Favorite Meal" to="/dashboard/favorite-meal">
+             <FaMoneyCheck />
+            <span className="is-drawer-close:hidden">Favorite Meal</span>
+            </NavLink>
+
+        </li>
+
+        {/* Platform Statistics*/}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Platform Statistics" to="/dashboard/platform-statistics">
+             <FaMoneyCheck />
+            <span className="is-drawer-close:hidden">Platform Statistics</span>
+            </NavLink>
+
+        </li>
+
+      
+
+
         {/*my-orders links */}
 
         <li> 
@@ -70,8 +93,47 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">My Orders</span>
             </NavLink>
         </li>
+
+        {/*create-meals links */}
+
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Create meal" to="/dashboard/create-meal">
+             <IoFastFoodSharp />
+            <span className="is-drawer-close:hidden">Create meal</span>
+            </NavLink>
+        </li>
+
+        {/* chef routes */}
         {
-            role === 'admin' && <>
+          role === 'chef' && <> 
+         {/* Our dashboard links my meals */}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Meals" to="/dashboard/my-meals">
+             <IoFastFoodSharp />
+            <span className="is-drawer-close:hidden">My Meals</span>
+            </NavLink>
+
+        </li>
+
+          {/*order-Request links */}
+
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Order-Request" to="/dashboard/order-request">
+             <IoFastFoodSharp />
+            <span className="is-drawer-close:hidden">Order Request</span>
+            </NavLink>
+        </li>
+
+
+
+          </>
+        }
+
+
+
+
+        { /* Admin routes */}
+          {  role === 'admin' && <>
             <li> 
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Requests" to="/dashboard/manage-requests">
              <MdManageAccounts />

@@ -2,24 +2,36 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+
 
 const MyProfile = () => {
-  const { user } = useAuth();
+const { user: firebaseUser } = useAuth();
+const { data: dbUser, isLoading } = useQuery({
+  queryKey: ["dbUser", firebaseUser?.email],
+  enabled: !!firebaseUser?.email,
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/users/${firebaseUser.email}/role`);
+    return res.data;
+  },
+});
+
   const axiosSecure = useAxiosSecure();
 
-  if (!user) {
-    return <p className="text-center py-20">Loading profile...</p>;
-  }
+  if (isLoading) {
+  return <p className="text-center py-20">Loading profile...</p>;
+}
 
-  const {
-    displayName,
-    email,
-    photoURL,
-    role = "user",
-    status = "active",
-    chefId,
-    address,
-  } = user;
+const {
+  displayName = firebaseUser.displayName,
+  email = firebaseUser.email,
+  photoURL = firebaseUser.photoURL,
+  role = "user",
+  status = "active",
+  chefId,
+  address,
+} = dbUser;
+
 
   // ================= SEND ROLE REQUEST =================
   const handleRoleRequest = async (type) => {

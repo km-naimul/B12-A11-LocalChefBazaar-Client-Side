@@ -112,21 +112,17 @@ const MyOrders = () => {
 
                 {/* Pay Button */}
                 {order.paymentStatus === "Pending" &&
-                  order.orderStatus !== "delivered" && 
-                             
-                  ( 
-                    <div className="flex justify-end mt-4">
-                      {/* <span className="text-green-400"> Paid </span> :   */}                                           
-                       <Link to={`/dashboard/payment/${order._id}`}> 
-                       <button
-                        onClick={() => handlePay(order)}
-                        className="px-5 py-2 rounded-full bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition"
-                      >
-                        Pay Now
-                      </button>
-                       </Link>
-                    </div>
-                  )}
+  order.orderStatus === "accepted" && (
+    <div className="flex justify-end mt-4">
+      <Link to={`/dashboard/payment/${order._id}`}>
+        <button className="px-5 py-2 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600">
+          Pay Now
+        </button>
+      </Link>
+    </div>
+)}
+
+
               </div>
             );
           })}
