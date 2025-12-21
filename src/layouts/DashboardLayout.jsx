@@ -1,164 +1,130 @@
-import React from 'react';
-import { FaMoneyCheck, FaUsers } from 'react-icons/fa';
-import { ImProfile } from 'react-icons/im';
-import { IoFastFoodSharp } from 'react-icons/io5';
-import { MdManageAccounts } from 'react-icons/md';
-import { Link, NavLink, Outlet } from 'react-router';
-import useRole from '../hooks/useRole';
+import React from "react";
+import { FaMoneyCheck, FaUsers } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { IoFastFoodSharp } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
+import { Link, NavLink, Outlet } from "react-router";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
-    const {role} = useRole();
-    return (
-        <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
-  <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-  <div className="drawer-content">
-    {/* Navbar */}
-    <nav className="navbar w-full bg-base-300">
-      <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-        {/* Sidebar toggle icon */}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
-      </label>
-      <div className="px-4">Local Chef-Bazar Dashboard </div>
-    </nav>
-    {/* Page content here */}
-    <Outlet> </Outlet>
-  </div>
+  const { role } = useRole();
 
-  <div className="drawer-side is-drawer-close:overflow-visible">
-    <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-    <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-      {/* Sidebar content here */}
-      <ul className="menu w-full grow">
-        {/* List item */}
-        <li>
-          <Link to="/" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-            {/* Home icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-            <span className="is-drawer-close:hidden">Homepage</span>
-          </Link>
-        </li>
+  return (
+    <div className="drawer lg:drawer-open max-w-7xl mx-auto">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-            {/* Our dashboard links */}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Profile" to="/dashboard/my-profile">
-             <ImProfile />
-            <span className="is-drawer-close:hidden">My Profile</span>
+      {/* ================= MAIN CONTENT ================= */}
+      <div className="drawer-content">
+        {/* Navbar */}
+        <nav className="navbar bg-base-300">
+          <label
+            htmlFor="my-drawer-4"
+            className="btn btn-square btn-ghost"
+          >
+            ☰
+          </label>
+          <div className="px-4 font-semibold">
+            Local Chef-Bazaar Dashboard
+          </div>
+        </nav>
+
+        <Outlet />
+      </div>
+
+      {/* ================= SIDEBAR ================= */}
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+
+        <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-1">
+          {/* ================= COMMON ================= */}
+          <li>
+            <Link to="/">🏠 Homepage</Link>
+          </li>
+
+          <li>
+            <NavLink to="/dashboard/my-profile">
+              <ImProfile /> My Profile
             </NavLink>
+          </li>
 
-        </li>
-           
-        {/* Payment history*/}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history" to="/dashboard/payment-history">
-             <FaMoneyCheck />
-            <span className="is-drawer-close:hidden">Payment history</span>
-            </NavLink>
+          {/* ================= USER ================= */}
+          {role === "user" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/my-orders">
+                  <IoFastFoodSharp /> My Orders
+                </NavLink>
+              </li>
 
-        </li>
+              <li>
+                <NavLink to="/dashboard/payment-history">
+                  <FaMoneyCheck /> Payment History
+                </NavLink>
+              </li>
 
-        {/* My Review*/}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Review" to="/dashboard/my-review">
-             <FaMoneyCheck />
-            <span className="is-drawer-close:hidden">My Review</span>
-            </NavLink>
-        </li>
+              <li>
+                <NavLink to="/dashboard/my-review">
+                  <FaMoneyCheck /> My Review
+                </NavLink>
+              </li>
 
-        {/* Favorite Meal*/}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Favorite Meal" to="/dashboard/favorite-meal">
-             <FaMoneyCheck />
-            <span className="is-drawer-close:hidden">Favorite Meal</span>
-            </NavLink>
-
-        </li>
-
-       {/*my-orders links */}
-
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Orders" to="/dashboard/my-orders">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">My Orders</span>
-            </NavLink>
-        </li>
-       
-
-        {/* chef routes */}
-        {
-          role === 'chef' && <> 
-         {/* Our dashboard links my meals */}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Meals" to="/dashboard/my-meals">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">My Meals</span>
-            </NavLink>
-
-        </li>
-
-          {/*order-Request links */}
-
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Order-Request" to="/dashboard/order-request">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">Order Request</span>
-            </NavLink>
-        </li>
-
-        
-
-        {/*create-meals links */}
-
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Create meal" to="/dashboard/create-meal">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">Create meal</span>
-            </NavLink>
-        </li>
-
-          </>
-        }
-
-        { /* Admin routes */}
-          {  role === 'admin' && <>
-            <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Requests" to="/dashboard/manage-requests">
-             <MdManageAccounts />
-            <span className="is-drawer-close:hidden">Manage Requests</span>
-            </NavLink>
-        </li>
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip=" Manage Users" to="/dashboard/manage-users">
-             <FaUsers />
-            <span className="is-drawer-close:hidden">Manage Users</span>
-            </NavLink>
-        </li>
-
-         {/* Platform Statistics*/}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Platform Statistics" to="/dashboard/platform-statistics">
-             <FaMoneyCheck />
-            <span className="is-drawer-close:hidden">Platform Statistics</span>
-            </NavLink>
-
-        </li>
-            
+              <li>
+                <NavLink to="/dashboard/favorite-meal">
+                  <FaMoneyCheck /> Favorite Meal
+                </NavLink>
+              </li>
             </>
-        }
-        
+          )}
 
-        {/* List item */}
-        <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-            {/* Settings icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-            <span className="is-drawer-close:hidden">Settings</span>
-          </button>
-        </li>
-      </ul>
+          {/* ================= CHEF ================= */}
+          {role === "chef" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/create-meal">
+                  <IoFastFoodSharp /> Create Meal
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/my-meals">
+                  <IoFastFoodSharp /> My Meals
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/order-request">
+                  <IoFastFoodSharp /> Order Requests
+                </NavLink>
+              </li>
+            </>
+          )}
+
+          {/* ================= ADMIN ================= */}
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/manage-users">
+                  <FaUsers /> Manage Users
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/manage-requests">
+                  <MdManageAccounts /> Manage Requests
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/platform-statistics">
+                  <FaMoneyCheck /> Platform Statistics
+                </NavLink>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
-    );
+  );
 };
 
 export default DashboardLayout;
