@@ -73,19 +73,7 @@ const DashboardLayout = () => {
 
         </li>
 
-        {/* Platform Statistics*/}
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Platform Statistics" to="/dashboard/platform-statistics">
-             <FaMoneyCheck />
-            <span className="is-drawer-close:hidden">Platform Statistics</span>
-            </NavLink>
-
-        </li>
-
-      
-
-
-        {/*my-orders links */}
+       {/*my-orders links */}
 
         <li> 
             <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Orders" to="/dashboard/my-orders">
@@ -93,15 +81,7 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">My Orders</span>
             </NavLink>
         </li>
-
-        {/*create-meals links */}
-
-        <li> 
-            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Create meal" to="/dashboard/create-meal">
-             <IoFastFoodSharp />
-            <span className="is-drawer-close:hidden">Create meal</span>
-            </NavLink>
-        </li>
+       
 
         {/* chef routes */}
         {
@@ -124,13 +104,19 @@ const DashboardLayout = () => {
             </NavLink>
         </li>
 
+        
 
+        {/*create-meals links */}
+
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Create meal" to="/dashboard/create-meal">
+             <IoFastFoodSharp />
+            <span className="is-drawer-close:hidden">Create meal</span>
+            </NavLink>
+        </li>
 
           </>
         }
-
-
-
 
         { /* Admin routes */}
           {  role === 'admin' && <>
@@ -145,6 +131,15 @@ const DashboardLayout = () => {
              <FaUsers />
             <span className="is-drawer-close:hidden">Manage Users</span>
             </NavLink>
+        </li>
+
+         {/* Platform Statistics*/}
+        <li> 
+            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Platform Statistics" to="/dashboard/platform-statistics">
+             <FaMoneyCheck />
+            <span className="is-drawer-close:hidden">Platform Statistics</span>
+            </NavLink>
+
         </li>
             
             </>

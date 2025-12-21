@@ -25,6 +25,7 @@ import OrderRequest from "../pages/Dashboard/OrderReqst/OrderRequest";
 import MyReview from "../pages/Dashboard/MyReview/MyReview";
 import FavoriteMeal from "../pages/Dashboard/FavoriteMeal/FavoriteMeal";
 import PlatformStatistics from "../pages/Dashboard/PlatformStatistics/PlatformStatistics";
+import ChefRoute from "./ChefRoute";
 
 
 export const router = createBrowserRouter([
@@ -77,18 +78,6 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "my-meals",
-        Component: MyMeals,
-      },
-      {
-        path: "update-meal/:id",
-        Component: UpdateMeal,
-      },
-      {
-        path: 'my-orders',
-        Component: MyOrders,
-      },
-      {
         path: 'payment/:orderId',
         Component: Payment,
       },
@@ -107,11 +96,7 @@ export const router = createBrowserRouter([
       {
         path: 'my-profile',
        Component: Myprofile, 
-      },
-      {
-        path: 'order-request',
-        Component: OrderRequest,
-      },
+      },    
       {
         path: 'my-review',
         Component: MyReview,
@@ -121,12 +106,31 @@ export const router = createBrowserRouter([
         Component: FavoriteMeal,
       },
       {
-        path: 'platform-statistics',
-        Component: PlatformStatistics,
+        path: 'my-orders',
+        Component: MyOrders,
+      },
+      // chef routes
+      {
+        path: "my-meals",
+        element: <ChefRoute> <MyMeals> </MyMeals> </ChefRoute>
+      },    
+      {
+        path: "update-meal/:id",
+        element: <ChefRoute> <UpdateMeal> </UpdateMeal> </ChefRoute>        
+      },
+      {
+        path: 'order-request',
+        element: <ChefRoute> <OrderRequest> </OrderRequest> </ChefRoute>
       },
       {
         path: 'create-meal',
-        Component: CreateMeal,
+        element: <ChefRoute> <CreateMeal> </CreateMeal> </ChefRoute>
+      },
+
+      // admin only routes
+      {
+        path: 'platform-statistics',
+        element: <AdminRoutes> <PlatformStatistics> </PlatformStatistics> </AdminRoutes>        
       },
       {
         path: 'manage-requests',

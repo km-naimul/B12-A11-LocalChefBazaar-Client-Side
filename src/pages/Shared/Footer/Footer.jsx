@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#fcf1f1] text-gray-700 mt-1">
-      <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
+      <div className="max-w-6xl mx-auto px-4 py-5 space-y-10">
         {/* Top: logo + description + social icons */}
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between border-b border-red-100 pb-8">
           <div className="max-w-2xl space-y-3">
@@ -92,18 +92,18 @@ const Footer = () => {
           {/* About / general links */}
           <div className="space-y-1">
             <h4 className="font-semibold text-gray-800">About</h4>
-            <p>Whether you’re a fan of local delicacies like Biryani, Kacchi, Khichuri, Chui jhal, Kala Bhuna, or prefer Western favorites such as Burgers, Pizzas, Pasta, and Fried Chicken, Foodi ensures the best restaurants cater to your cravings within your budget. </p>
+            <p>Whether you’re a fan of local delicacies like Biryani, Kacchi, Khichuri, Chui jhal, Kala Bhuna, or prefer Western favorites such as Burgers, Pizzas, Pasta, and Fried Chicken. </p>
           </div>
 
           {/* Legal / terms */}
           <div className="space-y-1">
             <h4 className="font-semibold text-gray-800">Terms & Conditions</h4>
-            <p>The Platforms may be used by (i) natural persons who have reached 18 years of age and (ii) corporate legal entities, e.g companies. Where applicable, these Terms shall be subject to country-specific provisions as set out herein.</p>
+            <p>The Platforms may be used by (i) natural persons who have reached 18 years of age and (ii) corporate legal entities, e.g companies.</p>
           </div>
         </div>
 
         {/* Copyright line */}
-        <div className="border-t border-red-100 pt-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+        <div className="border-t border-red-100 pt-1 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>
             Copyright © {year} ChefBazaar Industries Ltd. All rights reserved.
           </p>
