@@ -1,27 +1,44 @@
-import { FaShoppingBag, FaStar, FaHeart } from "react-icons/fa";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const UserHome = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data = {} } = useQuery({
+    queryKey: ["user-summary", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const orders = await axiosSecure.get(`/orders?email=${user.email}`);
+      const favorites = await axiosSecure.get(`/favorites?userEmail=${user.email}`);
+      const reviews = await axiosSecure.get(`/reviews?userEmail=${user.email}`);
+
+      return {
+        orders: orders.data.length,
+        favorites: favorites.data?.length || 0,
+        reviews: reviews.data.length,
+      };
+    },
+  });
+
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">👋 Welcome Back!</h2>
+      <h2 className="text-2xl font-bold">Welcome {user?.displayName}</h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaShoppingBag className="text-3xl text-red-500 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">My Orders</h3>
-          <p className="text-gray-500">View your order history</p>
+      <div className="grid md:grid-cols-3 gap-4">
+        <div className="bg-white p-4 rounded shadow">
+          <p>My Orders</p>
+          <h3 className="text-xl font-bold">{data.orders}</h3>
         </div>
-
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaStar className="text-3xl text-yellow-400 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">My Reviews</h3>
-          <p className="text-gray-500">Your food reviews</p>
+        <div className="bg-white p-4 rounded shadow">
+          <p>Favorite Meals</p>
+          <h3 className="text-xl font-bold">{data.favorites}</h3>
         </div>
-
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaHeart className="text-3xl text-pink-500 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">Favorites</h3>
-          <p className="text-gray-500">Saved meals</p>
+        <div className="bg-white p-4 rounded shadow">
+          <p>My Reviews</p>
+          <h3 className="text-xl font-bold">{data.reviews}</h3>
         </div>
       </div>
     </div>

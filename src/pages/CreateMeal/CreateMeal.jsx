@@ -74,8 +74,8 @@ const CreateMeal = () => {
         foodName: data.foodName,
         chefName: data.chefName,
         foodImage: imgData.data.display_url,
-        price: data.price,
-        rating: data.rating,
+        price: Number(data.price),
+        rating: Number(data.rating),
         ingredients: data.ingredients,
         estimatedDeliveryTime: data.estimatedDeliveryTime,
         chefExperience: data.chefExperience,
@@ -115,19 +115,111 @@ const CreateMeal = () => {
 
         <form onSubmit={handleSubmit(handleCreateMeal)} className="space-y-4">
 
+          {/* Food Name */}
           <div>
             <label className="block text-sm font-medium mb-1">Food Name</label>
-            <input {...register("foodName", { required: true })} className="input input-bordered w-full" />
+            <input
+              {...register("foodName", { required: true })}
+              className="input input-bordered w-full"
+            />
           </div>
 
+          {/* Chef Name */}
           <div>
             <label className="block text-sm font-medium mb-1">Chef Name</label>
-            <input {...register("chefName", { required: true })} className="input input-bordered w-full" />
+            <input
+              {...register("chefName", { required: true })}
+              className="input input-bordered w-full"
+            />
           </div>
 
+          {/* Food Image */}
           <div>
             <label className="block text-sm font-medium mb-1">Food Image</label>
-            <input type="file" {...register("foodImage", { required: true })} className="file-input file-input-bordered w-full" />
+            <input
+              type="file"
+              accept="image/*"
+              {...register("foodImage", { required: true })}
+              className="file-input file-input-bordered w-full"
+            />
+          </div>
+
+          {/* Price & Rating */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Price</label>
+              <input
+                type="number"
+                {...register("price", { required: true })}
+                className="input input-bordered w-full"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">Rating</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="5"
+                {...register("rating")}
+                className="input input-bordered w-full"
+              />
+            </div>
+          </div>
+
+          {/* Ingredients */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Ingredients</label>
+            <input
+              {...register("ingredients", { required: true })}
+              placeholder="Rice, Chicken, Onion"
+              className="input input-bordered w-full"
+            />
+          </div>
+
+          {/* Delivery Time & Experience */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Estimated Delivery Time
+              </label>
+              <input
+                {...register("estimatedDeliveryTime", { required: true })}
+                className="input input-bordered w-full"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Chef Experience
+              </label>
+              <input
+                {...register("chefExperience", { required: true })}
+                className="input input-bordered w-full"
+              />
+            </div>
+          </div>
+
+          {/* Chef ID & User Email */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Chef ID</label>
+              <input
+                value={dbUser?.chefId || ""}
+                readOnly
+                className="input input-bordered w-full bg-gray-100"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">User Email</label>
+              <input
+                value={firebaseUser?.email || ""}
+                readOnly
+                className="input input-bordered w-full bg-gray-100"
+              />
+            </div>
           </div>
 
           <button className="btn bg-orange-500 text-white w-full">

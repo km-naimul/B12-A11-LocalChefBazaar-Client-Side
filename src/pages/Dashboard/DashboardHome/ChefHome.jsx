@@ -1,27 +1,41 @@
-import { FaUtensils, FaClipboardList, FaPlus } from "react-icons/fa";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const ChefHome = () => {
+const ChefHome = ({ chefId }) => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data = {} } = useQuery({
+    queryKey: ["chef-stats", chefId],
+    enabled: !!chefId,
+    queryFn: async () => {
+      const meals = await axiosSecure.get(`/createMeals?chefId=${chefId}`);
+      const orders = await axiosSecure.get(`/orders?chefId=${chefId}`);
+
+      return {
+        meals: meals.data.length,
+        orders: orders.data.length,
+        pending: orders.data.filter(o => o.orderStatus === "pending").length,
+      };
+    },
+  });
+
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">👨‍🍳 Chef Dashboard</h2>
+      <h2 className="text-2xl font-bold">Chef Dashboard</h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaUtensils className="text-3xl text-orange-500 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">My Meals</h3>
-          <p className="text-gray-500">Meals you created</p>
+      <div className="grid md:grid-cols-3 gap-4">
+        <div className="bg-white p-4 rounded shadow">
+          <p>Total Meals</p>
+          <h3 className="text-xl font-bold">{data.meals}</h3>
         </div>
-
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaClipboardList className="text-3xl text-blue-500 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">Order Requests</h3>
-          <p className="text-gray-500">Orders from customers</p>
+        <div className="bg-white p-4 rounded shadow">
+          <p>Total Orders</p>
+          <h3 className="text-xl font-bold">{data.orders}</h3>
         </div>
-
-        <div className="bg-white shadow rounded-xl p-6 text-center">
-          <FaPlus className="text-3xl text-green-500 mx-auto" />
-          <h3 className="text-lg font-semibold mt-2">Create Meal</h3>
-          <p className="text-gray-500">Add new food item</p>
+        <div className="bg-white p-4 rounded shadow">
+          <p>Pending Orders</p>
+          <h3 className="text-xl font-bold">{data.pending}</h3>
         </div>
       </div>
     </div>

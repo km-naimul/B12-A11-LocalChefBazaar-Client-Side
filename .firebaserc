@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "local-chefbazaar",
+    "prod": "local-chefbazaar"
+  },
+  "targets": {},
+  "etags": {}
+}

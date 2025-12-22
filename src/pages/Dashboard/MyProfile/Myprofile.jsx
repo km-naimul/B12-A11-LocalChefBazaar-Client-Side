@@ -4,39 +4,40 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 
-
 const MyProfile = () => {
-const { user: firebaseUser } = useAuth();
-const { data: dbUser, isLoading } = useQuery({
-  queryKey: ["dbUser", firebaseUser?.email],
-  enabled: !!firebaseUser?.email,
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/users/${firebaseUser.email}/role`);
-    return res.data;
-  },
-});
-
+  const { user: firebaseUser } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  if (isLoading) {
-  return <p className="text-center py-20">Loading profile...</p>;
-}
+  const { data: dbUser, isLoading } = useQuery({
+    queryKey: ["dbUser", firebaseUser?.email],
+    enabled: !!firebaseUser?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/users/${firebaseUser.email}/role`
+      );
+      return res.data;
+    },
+  });
 
-const {
-  displayName = firebaseUser.displayName,
-  email = firebaseUser.email,
-  photoURL = firebaseUser.photoURL,
-  role = "user",
-  status = "active",
-  chefId,
-  address,
-} = dbUser;
+  if (isLoading) {
+    return <p className="text-center py-20">Loading profile...</p>;
+  }
+
+  const {
+    displayName = firebaseUser.displayName,
+    email = firebaseUser.email,
+    photoURL = firebaseUser.photoURL,
+    role = "user",
+    status = "active",
+    chefId,
+    address,
+  } = dbUser;
 
   const handleRoleRequest = async (type) => {
     const requestData = {
       userName: displayName,
       userEmail: email,
-      requestType: type, // chef | admin
+      requestType: type,
       requestStatus: "pending",
       requestTime: new Date().toISOString(),
     };
@@ -53,68 +54,89 @@ const {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <div className="bg-white shadow rounded-2xl p-6 text-center space-y-4">
-        <img
-          src={photoURL}
-          alt="User"
-          className="w-24 h-24 rounded-full mx-auto object-cover"
-        />
+    <div className="max-w-3xl mx-auto p-6">
+      <div className="bg-white shadow-xl rounded-3xl overflow-hidden">
 
-        <h2 className="text-2xl font-bold">{displayName}</h2>
-        <p className="text-sm text-gray-600">{email}</p>
-
-        <div className="text-sm text-gray-700 space-y-1 mt-4">
-          <p>
-            <strong>Role:</strong>{" "}
-            <span className="capitalize">{role}</span>
-          </p>
-          <p>
-            <strong>Status:</strong>{" "}
-            <span className="capitalize">{status}</span>
-          </p>
-
-          {role === "chef" && chefId && (
-            <p>
-              <strong>Chef ID:</strong> {chefId}
-            </p>
-          )}
-
-          {address && (
-            <p>
-              <strong>Address:</strong> {address}
-            </p>
-          )}
+        {/* 🔥 Header */}
+        <div className="bg-gradient-to-r from-red-500 to-orange-400 p-6 text-center">
+          <img
+            src={photoURL}
+            alt="User"
+            className="w-28 h-28 rounded-full mx-auto border-4 border-white shadow-lg object-cover"
+          />
+          <h2 className="text-2xl font-bold text-white mt-3">
+            {displayName}
+          </h2>
+          <p className="text-sm text-red-100">{email}</p>
         </div>
 
-        {/* ===== ACTION BUTTONS ===== */}
-        <div className="flex justify-center gap-4 mt-6">
-          {role === "user" && (
-            <>
-              <button
-                onClick={() => handleRoleRequest("chef")}
-                className="px-4 py-2 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600"
-              >
-                Be a Chef
-              </button>
+        {/* 📄 Info Section */}
+        <div className="p-6 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
+            <div className="bg-gray-50 rounded-xl p-4">
+              <p className="text-xs text-gray-500">Role</p>
+              <p className="font-semibold capitalize">{role}</p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-4">
+              <p className="text-xs text-gray-500">Status</p>
+              <p
+                className={`font-semibold capitalize ${
+                  status === "fraud"
+                    ? "text-red-600"
+                    : "text-green-600"
+                }`}
+              >
+                {status}
+              </p>
+            </div>
+
+            {role === "chef" && chefId && (
+              <div className="bg-gray-50 rounded-xl p-4 sm:col-span-2">
+                <p className="text-xs text-gray-500">Chef ID</p>
+                <p className="font-semibold">{chefId}</p>
+              </div>
+            )}
+
+            {address && (
+              <div className="bg-gray-50 rounded-xl p-4 sm:col-span-2">
+                <p className="text-xs text-gray-500">Address</p>
+                <p className="font-semibold">{address}</p>
+              </div>
+            )}
+          </div>
+
+          {/* 🎯 Action Buttons */}
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
+
+            {role === "user" && (
+              <>
+                <button
+                  onClick={() => handleRoleRequest("chef")}
+                  className="px-6 py-2 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600 transition"
+                >
+                  Become a Chef
+                </button>
+
+                <button
+                  onClick={() => handleRoleRequest("admin")}
+                  className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
+                >
+                  Request Admin
+                </button>
+              </>
+            )}
+
+            {role === "chef" && (
               <button
                 onClick={() => handleRoleRequest("admin")}
-                className="px-4 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600"
+                className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
               >
-                Be an Admin
+                Request Admin
               </button>
-            </>
-          )}
-
-          {role === "chef" && (
-            <button
-              onClick={() => handleRoleRequest("admin")}
-              className="px-4 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600"
-            >
-              Be an Admin
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

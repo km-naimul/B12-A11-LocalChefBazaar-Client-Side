@@ -154,18 +154,24 @@ const MealDetails = () => {
           <div className="flex gap-3 mt-4">
             {/* ✅ FIXED ORDER BUTTON */}
             <button
-              onClick={handleOrderClick}
-              className="px-6 py-2 rounded-full bg-red-500 text-white"
-            >
-              Order Now
-            </button>
+  onClick={handleOrderClick}
+  className="px-6 py-2 rounded-full 
+             bg-red-500 text-white 
+             transition-all duration-300 
+             hover:bg-white hover:text-red-500 hover:shadow-lg hover:-translate-y-0.5"
+>
+  Order Now
+</button>
 
             <button
-              onClick={handleAddFavorite}
-              className="px-6 py-2 rounded-full border border-red-400 text-red-600"
-            >
-              Add to Favorite ❤️
-            </button>
+  onClick={handleAddFavorite}
+  className="px-6 py-2 rounded-full 
+             border border-red-400 text-red-600 
+             transition-all duration-300
+             hover:bg-red-500 hover:text-white hover:shadow-lg hover:-translate-y-0.5"
+>
+  Add to Favorite ❤️
+</button>
           </div>
         </div>
       </div>

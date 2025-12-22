@@ -84,7 +84,7 @@ const PlatformStatistics = () => {
 
         <div className="bg-white shadow rounded p-5">
           <h4 className="text-gray-500">Total Payment</h4>
-          <p className="text-2xl font-bold">৳ {totalPaymentAmount}</p>
+          <p className="text-2xl font-bold">$ {totalPaymentAmount}</p>
         </div>
 
         <div className="bg-white shadow rounded p-5">
