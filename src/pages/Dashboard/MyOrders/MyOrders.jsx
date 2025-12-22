@@ -1,4 +1,3 @@
-// src/pages/Dashboard/MyOrders/MyOrders.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
@@ -23,7 +22,6 @@ const MyOrders = () => {
     return <p className="text-center py-20">Loading orders...</p>;
   }
 
-  // ================= PAY BUTTON =================
   const handlePay = (order) => {
     Swal.fire({
       title: "Proceed to Payment?",

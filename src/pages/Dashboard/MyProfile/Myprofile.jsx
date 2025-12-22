@@ -32,8 +32,6 @@ const {
   address,
 } = dbUser;
 
-
-  // ================= SEND ROLE REQUEST =================
   const handleRoleRequest = async (type) => {
     const requestData = {
       userName: displayName,

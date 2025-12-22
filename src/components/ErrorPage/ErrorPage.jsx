@@ -1,18 +1,19 @@
-import React from 'react';
-import Lottie from "lottie-react";
+import React from "react";
 import { useNavigate } from "react-router";
-import errorAnimation1 from "../../assets/forbidden403.json"; 
+import Lottie from "lottie-react";
+import errorAnimation from "../../assets/Page Not Found 404.json"; 
 
-const Forbidden = () => {
-    const navigate = useNavigate();
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+const ErrorPage = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
       <div className="max-w-md">
-        <Lottie animationData={errorAnimation1} loop={true} />
+        <Lottie animationData={errorAnimation} loop={true} />
       </div>
 
       <h1 className="text-4xl font-bold text-red-500 mt-4">
-        Oops! Forbidden
+        Oops! Page Not Found
       </h1>
 
       <p className="text-gray-600 text-center mt-2">
@@ -26,7 +27,7 @@ const Forbidden = () => {
         ⬅ Go Back Home
       </button>
     </div>
-    );
+  );
 };
 
-export default Forbidden;
+export default ErrorPage;

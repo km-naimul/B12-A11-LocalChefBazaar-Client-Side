@@ -33,7 +33,7 @@ const UpdateMeal = () => {
     <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow">
       <h2 className="text-2xl font-bold mb-6 text-center">Update Meal</h2>
 
-      {/* Meal Image Preview */}
+      
       {mealImage && (
         <div className="mb-6 flex justify-center">
           <img
@@ -46,7 +46,7 @@ const UpdateMeal = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-        {/* Food Name */}
+       
         <div>
           <label className="block text-sm font-semibold mb-1">
             Food Name
@@ -57,7 +57,6 @@ const UpdateMeal = () => {
           />
         </div>
 
-        {/* Price */}
         <div>
           <label className="block text-sm font-semibold mb-1">
             Price (৳)
@@ -69,7 +68,7 @@ const UpdateMeal = () => {
           />
         </div>
 
-        {/* Rating */}
+       
         <div>
           <label className="block text-sm font-semibold mb-1">
             Rating (0–5)
@@ -82,7 +81,7 @@ const UpdateMeal = () => {
           />
         </div>
 
-        {/* Ingredients */}
+        
         <div>
           <label className="block text-sm font-semibold mb-1">
             Ingredients
@@ -94,7 +93,7 @@ const UpdateMeal = () => {
           />
         </div>
 
-        {/* Estimated Delivery Time */}
+      
         <div>
           <label className="block text-sm font-semibold mb-1">
             Estimated Delivery Time
@@ -106,7 +105,7 @@ const UpdateMeal = () => {
           />
         </div>
 
-        {/* Submit */}
+       
         <button
           type="submit"
           className="btn bg-orange-500 hover:bg-orange-600 text-white w-full mt-4"

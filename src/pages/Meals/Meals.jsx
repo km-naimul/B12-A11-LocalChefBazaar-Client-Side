@@ -26,7 +26,7 @@ const Meals = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
-      {/* Header */}
+      
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
         <div>
           <h1 className="text-3xl font-bold">
@@ -48,14 +48,14 @@ const Meals = () => {
         </button>
       </div>
 
-      {/* Meals list */}
+     
       <div className="space-y-4">
         {sortedMeals.map((meal) => (
           <article
             key={meal._id}
             className="bg-white rounded-xl shadow border border-gray-100 overflow-hidden flex flex-col md:flex-row"
           >
-            {/* Image */}
+         
             <div className="md:w-44 flex-shrink-0">
               <img
                 src={meal.foodImage}
@@ -64,7 +64,7 @@ const Meals = () => {
               />
             </div>
 
-            {/* Content */}
+            
             <div className="flex-1 p-4 flex flex-col gap-2">
               <h2 className="text-lg md:text-xl font-bold uppercase">
                 {meal.foodName}

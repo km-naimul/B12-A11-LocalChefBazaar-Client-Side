@@ -19,7 +19,6 @@ const COLORS = ["#10B981", "#EF4444"];
 const PlatformStatistics = () => {
   const axiosSecure = useAxiosSecure();
 
-  // 🔹 USERS
   const { data: users = [] } = useQuery({
     queryKey: ["admin-users"],
     queryFn: async () => {
@@ -28,7 +27,7 @@ const PlatformStatistics = () => {
     },
   });
 
-  // 🔹 PAYMENTS
+  
   const { data: payments = [] } = useQuery({
     queryKey: ["admin-payments"],
     queryFn: async () => {
@@ -37,7 +36,7 @@ const PlatformStatistics = () => {
     },
   });
 
-  // 🔹 ORDERS
+
   const { data: orders = [] } = useQuery({
     queryKey: ["admin-orders"],
     queryFn: async () => {
@@ -46,7 +45,7 @@ const PlatformStatistics = () => {
     },
   });
 
-  // 🔢 CALCULATIONS
+
   const totalUsers = users.length;
 
   const totalPaymentAmount = payments.reduce(
@@ -62,7 +61,7 @@ const PlatformStatistics = () => {
     (order) => order.orderStatus === "delivered"
   ).length;
 
-  // 📊 Chart Data
+  
   const orderData = [
     { name: "Pending", value: pendingOrders },
     { name: "Delivered", value: deliveredOrders },
@@ -76,7 +75,7 @@ const PlatformStatistics = () => {
     <div className="space-y-8">
       <h2 className="text-2xl font-bold">Platform Statistics</h2>
 
-      {/* 🔹 STAT CARDS */}
+     
       <div className="grid md:grid-cols-4 gap-4">
         <div className="bg-white shadow rounded p-5">
           <h4 className="text-gray-500">Total Users</h4>
@@ -103,9 +102,8 @@ const PlatformStatistics = () => {
         </div>
       </div>
 
-      {/* 🔹 CHARTS */}
       <div className="grid md:grid-cols-2 gap-8">
-        {/* PIE CHART */}
+        
         <div className="bg-white p-6 rounded shadow">
           <h3 className="font-semibold mb-4">Order Status</h3>
 
@@ -132,7 +130,6 @@ const PlatformStatistics = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* BAR CHART */}
         <div className="bg-white p-6 rounded shadow">
           <h3 className="font-semibold mb-4">Payments Overview</h3>
 

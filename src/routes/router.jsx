@@ -26,12 +26,15 @@ import MyReview from "../pages/Dashboard/MyReview/MyReview";
 import FavoriteMeal from "../pages/Dashboard/FavoriteMeal/FavoriteMeal";
 import PlatformStatistics from "../pages/Dashboard/PlatformStatistics/PlatformStatistics";
 import ChefRoute from "./ChefRoute";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement : <ErrorPage> </ErrorPage>,
     children: [
       {
         index: true,
@@ -56,6 +59,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: AuthLayout,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "login",
@@ -68,7 +72,7 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Dashboard routes (✅ FIXED)
+  // Dashboard routes 
   {
     path: "dashboard",
     element: (
@@ -76,7 +80,12 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage />, 
     children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
       {
         path: 'payment/:orderId',
         Component: Payment,

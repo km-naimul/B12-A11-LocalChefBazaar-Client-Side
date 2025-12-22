@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#fcf1f1] text-gray-700 mt-1">
       <div className="max-w-6xl mx-auto px-4 py-5 space-y-10">
-        {/* Top: logo + description + social icons */}
+        
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between border-b border-red-100 pb-8">
           <div className="max-w-2xl space-y-3">
             <Logo className="items-start justify-start text-start"/>
@@ -24,13 +24,13 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Social icons */}
+          
           <div className="flex flex-col items-start gap-3">
             <span className="text-sm font-semibold text-gray-700">
               Follow us
             </span>
             <div className="flex gap-3">
-              {/* X / Twitter */}
+              
               <button className="w-10 h-10 border border-red-400 rounded-lg flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@ const Footer = () => {
                 </svg>
               </button>
 
-              {/* YouTube */}
+              
               <button className="w-10 h-10 border border-red-400 rounded-lg flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ const Footer = () => {
                 </svg>
               </button>
 
-              {/* Facebook */}
+              
               <button className="w-10 h-10 border border-red-400 rounded-lg flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +72,9 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom grid: contact, working hours, links */}
+        
         <div className="grid gap-8 md:grid-cols-4 text-sm">
-          {/* Contact details */}
+        
           <div className="space-y-2">
             <h4 className="font-semibold text-gray-800">Contact Details</h4>
             <p>Phone: +880 1234-567890</p>
@@ -82,27 +82,24 @@ const Footer = () => {
             <p>Address: Dhaka, Bangladesh</p>
           </div>
 
-          {/* Working hours */}
+          
           <div className="space-y-2">
             <h4 className="font-semibold text-gray-800">Working Hours</h4>
             <p>Sat – Thu: 10:00 AM – 11:00 PM</p>
             <p>Friday: 3:00 PM – 11:00 PM</p>
           </div>
 
-          {/* About / general links */}
           <div className="space-y-1">
             <h4 className="font-semibold text-gray-800">About</h4>
             <p>Whether you’re a fan of local delicacies like Biryani, Kacchi, Khichuri, Chui jhal, Kala Bhuna, or prefer Western favorites such as Burgers, Pizzas, Pasta, and Fried Chicken. </p>
           </div>
 
-          {/* Legal / terms */}
           <div className="space-y-1">
             <h4 className="font-semibold text-gray-800">Terms & Conditions</h4>
             <p>The Platforms may be used by (i) natural persons who have reached 18 years of age and (ii) corporate legal entities, e.g companies.</p>
           </div>
         </div>
 
-        {/* Copyright line */}
         <div className="border-t border-red-100 pt-1 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>
             Copyright © {year} ChefBazaar Industries Ltd. All rights reserved.

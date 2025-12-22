@@ -22,7 +22,6 @@ const MyReview = () => {
     },
   });
 
-  // 🗑️ Delete
   const handleDelete = (id) => {
     Swal.fire({
       title: "Delete review?",
@@ -38,7 +37,6 @@ const MyReview = () => {
     });
   };
 
-  // ✏️ Update
   const onUpdate = (data) => {
     axiosSecure.patch(`/reviews/${editReview._id}`, data).then(() => {
       Swal.fire("Updated!", "Review updated.", "success");

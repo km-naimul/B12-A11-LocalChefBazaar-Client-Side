@@ -6,7 +6,6 @@ const ManageRequest = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  // 🔥 সব role request load হবে (pending + approved + rejected)
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ["roleRequests"],
     queryFn: async () => {
@@ -31,7 +30,7 @@ const ManageRequest = () => {
 
     Swal.fire("Success", `Request ${status}`, "success");
 
-    // 🔄 data reload → status update instantly দেখাবে
+   
     queryClient.invalidateQueries(["roleRequests"]);
   };
 

@@ -1,22 +1,23 @@
-import React from 'react';
-import useAuth from '../hooks/useAuth';
-import { Navigate, useLocation } from 'react-router';
+import React from "react";
+import useAuth from "../hooks/useAuth";
+import { Navigate, useLocation } from "react-router";
+import Loading from "../components/Loading/Loading";
 
-const PrivateRoute = ({children}) => {
-    const {user, loading} = useAuth();
-    const location = useLocation();
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
 
-    if(loading){
-        return <div>
-            <span className="loading loading-spinner text-error"></span>
-        </div>
-    }
+  
+  if (loading) {
+    return <Loading />;
+  }
 
-if(!user){
-    return <Navigate state={location.pathname} to="/login"> </Navigate>
-}
+ 
+  if (!user) {
+    return <Navigate to="/login" state={location.pathname} replace />;
+  }
 
-    return children;
+  return children;
 };
 
 export default PrivateRoute;

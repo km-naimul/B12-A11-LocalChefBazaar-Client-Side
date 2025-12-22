@@ -4,14 +4,10 @@ import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const OrderRequest = () => {
-  const { user } = useAuth(); // firebase user
+  const { user } = useAuth(); 
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-
-
-
-  // 🔥 get chef info from DB
   const { data: dbUser = {}, isLoading: userLoading } = useQuery({
     queryKey: ["db-user", user?.email],
     enabled: !!user?.email,
@@ -23,7 +19,7 @@ const OrderRequest = () => {
 
   const chefId = dbUser?.chefId;
 
-  // 🔥 ONLY this chef orders
+ 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["chef-orders", chefId],
     enabled: !!chefId,
@@ -33,7 +29,7 @@ const OrderRequest = () => {
     },
   });
 
-  // 🔄 Update order status
+  
   const updateStatus = async (orderId, status) => {
     await axiosSecure.patch(`/orders/${orderId}`, { orderStatus: status });
 

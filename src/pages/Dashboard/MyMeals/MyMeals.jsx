@@ -43,7 +43,6 @@ const MyMeals = () => {
     });
   };
 
-  // ================= UPDATE =================
   const handleUpdateMeal = (id) => {
     // redirect to update page with meal id
     navigate(`/dashboard/update-meal/${id}`);

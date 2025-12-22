@@ -13,23 +13,22 @@ const ReviewCard = ({ review }) => {
   return (
     <div className="max-w-md mx-auto bg-white shadow rounded-2xl p-6 border border-gray-100">
       
-      {/* Quote Icon */}
+    
       <FaQuoteLeft className="text-3xl text-teal-400 mb-4" />
 
-      {/* Review Text */}
+      
       <p className="text-gray-600 leading-relaxed">
         {comment}
       </p>
 
-      {/* Rating */}
+   
       <p className="mt-2 text-sm text-yellow-600">
         ⭐ {rating}
       </p>
 
-      {/* Divider */}
       <div className="my-4 border-b border-dashed border-teal-300"></div>
 
-      {/* Profile Section */}
+   
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden bg-teal-700">
           <img

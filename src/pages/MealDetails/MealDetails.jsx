@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import Reviews from "../Home/Reviews/Reviews";
 
-
 const MealDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,14 +14,14 @@ const MealDetails = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  // 🔐 login check
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
   }, [user, navigate]);
 
-  // 🔥 fetch single meal
+
   const { data: meal, isLoading } = useQuery({
     queryKey: ["mealDetails", id],
     queryFn: async () => {
@@ -31,73 +30,77 @@ const MealDetails = () => {
     },
   });
 
-  // 🔥 fetch reviews
-const { data: reviews = [] } = useQuery({
-  queryKey: ["reviews", id],
-  enabled: !!id,
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/reviews?foodId=${id}`);
-    return res.data;
-  },
-});
 
+  const { data: reviews = [] } = useQuery({
+    queryKey: ["reviews", id],
+    enabled: !!id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/reviews?foodId=${id}`);
+      return res.data;
+    },
+  });
 
   const { register, handleSubmit, reset } = useForm();
 
   const handleReviewSubmit = (data) => {
-  const reviewData = {
-    foodId: id,
-    mealName: meal.foodName,        // ✅ ADD
-    userEmail: user.email,          // ✅ ADD
-    reviewerName: user.displayName,
-    reviewerImage: user.photoURL,
-    rating: Number(data.rating),
-    comment: data.comment,
+    const reviewData = {
+      foodId: id,
+      mealName: meal.foodName,
+      userEmail: user.email,
+      reviewerName: user.displayName,
+      reviewerImage: user.photoURL,
+      rating: Number(data.rating),
+      comment: data.comment,
+    };
+
+    axiosSecure.post("/reviews", reviewData).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire("Success", "Review submitted!", "success");
+        reset();
+        queryClient.invalidateQueries(["reviews", id]);
+        queryClient.invalidateQueries(["my-reviews"]);
+      }
+    });
   };
 
-  axiosSecure.post("/reviews", reviewData).then((res) => {
-    if (res.data.insertedId) {
-      Swal.fire("Success", "Review submitted!", "success");
-      reset();
-      queryClient.invalidateQueries(["reviews", id]);
-      queryClient.invalidateQueries(["my-reviews"]);
-    }
-  });
-};
 
+  const handleAddFavorite = () => {
+    axiosSecure
+      .get(`/favorites?mealId=${id}&userEmail=${user.email}`)
+      .then((res) => {
+        if (res.data && res.data._id) {
+          Swal.fire("Already Added", "This meal is already in favorites", "info");
+          return;
+        }
 
+        const favoriteData = {
+          userEmail: user.email,
+          mealId: id,
+          mealName: meal.foodName,
+          chefId: meal.chefId,
+          chefName: meal.chefName,
+          price: meal.price.toString(),
+        };
 
-  // ❤️ Favorite
- const handleAddFavorite = () => {
-  axiosSecure
-    .get(`/favorites?mealId=${id}&userEmail=${user.email}`)
-    .then((res) => {
-
-      // ✅ FIX: check _id instead of truthy
-      if (res.data && res.data._id) {
-        Swal.fire(
-          "Already Added",
-          "This meal is already in favorites",
-          "info"
-        );
-        return;
-      }
-
-      const favoriteData = {
-        userEmail: user.email,
-        mealId: id,
-        mealName: meal.foodName,
-        chefId: meal.chefId,
-        chefName: meal.chefName,
-        price: meal.price.toString(),
-      };
-
-      axiosSecure.post("/favorites", favoriteData).then(() => {
-        Swal.fire("Success", "Added to favorites!", "success");
+        axiosSecure.post("/favorites", favoriteData).then(() => {
+          Swal.fire("Success", "Added to favorites!", "success");
+        });
       });
-    });
-};
+  };
 
+  const handleOrderClick = () => {
+    if (user?.status === "fraud") {
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied 🚫",
+        text: "You are marked as a fraud user. You cannot place orders.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    navigate(`/order/${meal._id}`);
+  };
 
   if (isLoading) {
     return <p className="text-center py-20">Loading...</p>;
@@ -149,8 +152,9 @@ const { data: reviews = [] } = useQuery({
           </p>
 
           <div className="flex gap-3 mt-4">
+            {/* ✅ FIXED ORDER BUTTON */}
             <button
-              onClick={() => navigate(`/order/${meal._id}`)}
+              onClick={handleOrderClick}
               className="px-6 py-2 rounded-full bg-red-500 text-white"
             >
               Order Now
@@ -166,14 +170,13 @@ const { data: reviews = [] } = useQuery({
         </div>
       </div>
 
-      {/* Reviews */}
-     {/* Reviews Section */}
-<div className="bg-white p-6 rounded-xl shadow space-y-4">
-  <h2 className="text-xl font-bold">Reviews</h2>
-  <Reviews reviews={reviews} />
-</div>
+      
+      <div className="bg-white p-6 rounded-xl shadow space-y-4">
+        <h2 className="text-xl font-bold">Reviews</h2>
+        <Reviews reviews={reviews} />
+      </div>
 
-      {/* Give Review */}
+      
       <form onSubmit={handleSubmit(handleReviewSubmit)} className="space-y-2">
         <input
           {...register("rating", { required: true })}

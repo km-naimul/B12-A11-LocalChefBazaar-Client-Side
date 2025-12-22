@@ -1,4 +1,3 @@
-// LogoBadge.jsx (বা চাইলে আবারও Logo.jsx এ রাখবি)
 import React from "react";
 import logo from "../../assets/Image___12_46_33_PM-removebg-preview.png";
 

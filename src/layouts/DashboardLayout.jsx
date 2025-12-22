@@ -1,10 +1,16 @@
 import React from "react";
-import { FaMoneyCheck, FaUsers } from "react-icons/fa";
+import { FaMoneyCheck, FaUserCheck, FaUsers } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoFastFoodSharp } from "react-icons/io5";
-import { MdManageAccounts } from "react-icons/md";
+import { MdManageAccounts, MdOutlineRateReview } from "react-icons/md";
 import { Link, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
+import { BsBagCheckFill } from "react-icons/bs";
+import { GiEternalLove, GiFoodTruck, GiMeal } from "react-icons/gi";
+import { CiSquareQuestion } from "react-icons/ci";
+import { FaUsersGear } from "react-icons/fa6";
+import { FcStatistics } from "react-icons/fc";
+import logoImg from "../assets/Image___12_46_33_PM-removebg-preview.png"
 
 const DashboardLayout = () => {
   const { role } = useRole();
@@ -30,6 +36,7 @@ const DashboardLayout = () => {
 
         <Outlet />
       </div>
+    
 
       {/* ================= SIDEBAR ================= */}
       <div className="drawer-side">
@@ -38,7 +45,31 @@ const DashboardLayout = () => {
         <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-1">
           {/* ================= COMMON ================= */}
           <li>
-            <Link to="/">🏠 Homepage</Link>
+            <Link to="/"> 
+            
+            
+            <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-red-500 to-green-500 p-[2px]">
+                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                      <img
+                        src={logoImg}
+                        alt="LocalChefBazaar Logo"
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                      <h3 className="text-xl font-extrabold tracking-tight">
+          <span className="text-red-600">Local</span>
+          <span className="text-green-700">ChefBazaar</span>
+        </h3>
+                    </div>
+                   </Link>
+          </li>
+
+
+          <li>
+            <Link to="/dashboard">🏠 Homepage</Link>
           </li>
 
           <li>
@@ -52,7 +83,7 @@ const DashboardLayout = () => {
             <>
               <li>
                 <NavLink to="/dashboard/my-orders">
-                  <IoFastFoodSharp /> My Orders
+                  <BsBagCheckFill /> My Orders
                 </NavLink>
               </li>
 
@@ -64,13 +95,13 @@ const DashboardLayout = () => {
 
               <li>
                 <NavLink to="/dashboard/my-review">
-                  <FaMoneyCheck /> My Review
+                  <MdOutlineRateReview /> My Review
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/dashboard/favorite-meal">
-                  <FaMoneyCheck /> Favorite Meal
+                  <GiEternalLove /> Favorite Meal
                 </NavLink>
               </li>
             </>
@@ -81,19 +112,19 @@ const DashboardLayout = () => {
             <>
               <li>
                 <NavLink to="/dashboard/create-meal">
-                  <IoFastFoodSharp /> Create Meal
+                  <GiFoodTruck /> Create Meal
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/dashboard/my-meals">
-                  <IoFastFoodSharp /> My Meals
+                  <GiMeal /> My Meals
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/dashboard/order-request">
-                  <IoFastFoodSharp /> Order Requests
+                  <CiSquareQuestion /> Order Requests
                 </NavLink>
               </li>
             </>
@@ -104,19 +135,19 @@ const DashboardLayout = () => {
             <>
               <li>
                 <NavLink to="/dashboard/manage-users">
-                  <FaUsers /> Manage Users
+                  <FaUserCheck /> Manage Users
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/dashboard/manage-requests">
-                  <MdManageAccounts /> Manage Requests
+                  <FaUsersGear /> Manage Requests
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/dashboard/platform-statistics">
-                  <FaMoneyCheck /> Platform Statistics
+                  <FcStatistics /> Platform Statistics
                 </NavLink>
               </li>
             </>

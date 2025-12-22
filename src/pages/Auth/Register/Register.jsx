@@ -30,8 +30,8 @@ const Register = () => {
       email: data.email,
       profileImage: data.profileImage,
       address: data.address,
-      role: "user",       // Default user
-      status: "active",   // Requirement অনুযায়ী
+      role: "user",       
+      status: "active",   
     };
 
     console.log("User Registered Data ->", userData, data.profileImage[0]

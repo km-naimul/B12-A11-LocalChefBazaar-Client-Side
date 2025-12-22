@@ -4,13 +4,15 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 
 const CreateMeal = () => {
   const { register, handleSubmit } = useForm();
   const { user: firebaseUser } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-  // 🔥 MongoDB user load (chefId এখান থেকে আসবে)
+  // 🔥 MongoDB user load (role + status + chefId)
   const { data: dbUser = {}, isLoading } = useQuery({
     queryKey: ["dbUser", firebaseUser?.email],
     enabled: !!firebaseUser?.email,
@@ -28,6 +30,26 @@ const CreateMeal = () => {
 
   if (isLoading) {
     return <p className="text-center py-20">Loading...</p>;
+  }
+
+  // 🚫 FRAUD CHEF BLOCK
+  if (dbUser?.status === "fraud") {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          Access Denied 🚫
+        </h2>
+        <p className="text-gray-600 mb-6">
+          You are marked as a fraud user. You cannot create meals.
+        </p>
+        <button
+          onClick={() => navigate("/")}
+          className="btn bg-red-500 text-white"
+        >
+          Go Home
+        </button>
+      </div>
+    );
   }
 
   const handleCreateMeal = async (data) => {
@@ -57,7 +79,7 @@ const CreateMeal = () => {
         ingredients: data.ingredients,
         estimatedDeliveryTime: data.estimatedDeliveryTime,
         chefExperience: data.chefExperience,
-        chefId: dbUser.chefId, // ✅ FIXED
+        chefId: dbUser.chefId,
         userEmail: firebaseUser.email,
         createdAt: new Date(),
       };
@@ -74,7 +96,7 @@ const CreateMeal = () => {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Create a meal successfully.",
+              title: "Meal created successfully",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -93,32 +115,19 @@ const CreateMeal = () => {
 
         <form onSubmit={handleSubmit(handleCreateMeal)} className="space-y-4">
 
-          {/* Other fields unchanged */}
-          <div> <label className="block text-sm font-medium mb-1">Food Name</label> <input type="text" {...register("foodName", { required: true })} className="input input-bordered w-full" /> </div> <div> <label className="block text-sm font-medium mb-1">Chef Name</label> <input type="text" {...register("chefName", { required: true })} className="input input-bordered w-full" /> </div> <div> <label className="block text-sm font-medium mb-1">Food Image</label> <input type="file" accept="image/*" {...register("foodImage", { required: true })} className="file-input file-input-bordered w-full" /> </div> <div className="grid grid-cols-2 gap-4"> <div> <label className="block text-sm font-medium mb-1">Price</label> <input type="number" {...register("price", { required: true })} className="input input-bordered w-full" /> </div> <div> <label className="block text-sm font-medium mb-1">Rating</label> <input type="number" step="0.1" {...register("rating")} className="input input-bordered w-full" /> </div> </div> <div> <label className="block text-sm font-medium mb-1">Ingredients</label> <input type="text" {...register("ingredients", { required: true })} className="input input-bordered w-full" placeholder="Rice, Chicken, Onion" /> </div> <div className="grid grid-cols-2 gap-4"> <div> <label className="block text-sm font-medium mb-1"> Delivery Time </label> <input type="text" {...register("estimatedDeliveryTime", { required: true })} className="input input-bordered w-full" /> </div> <div> <label className="block text-sm font-medium mb-1"> Chef Experience </label> <input type="text" {...register("chefExperience", { required: true })} className="input input-bordered w-full" /> </div> </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Food Name</label>
+            <input {...register("foodName", { required: true })} className="input input-bordered w-full" />
+          </div>
 
+          <div>
+            <label className="block text-sm font-medium mb-1">Chef Name</label>
+            <input {...register("chefName", { required: true })} className="input input-bordered w-full" />
+          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Chef ID</label>
-              <input
-                type="text"
-                value={dbUser?.chefId || ""}
-                {...register("chefId")}
-                className="input input-bordered w-full bg-gray-100"
-                readOnly
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">User Email</label>
-              <input
-                type="email"
-                value={firebaseUser?.email}
-                {...register("userEmail")}
-                className="input input-bordered w-full bg-gray-100"
-                readOnly
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Food Image</label>
+            <input type="file" {...register("foodImage", { required: true })} className="file-input file-input-bordered w-full" />
           </div>
 
           <button className="btn bg-orange-500 text-white w-full">

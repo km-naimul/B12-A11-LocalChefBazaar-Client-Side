@@ -12,12 +12,11 @@ const OrderPage = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  // 🔐 Private route safety
+  
   if (!user) {
     navigate("/login");
   }
 
-  // 🔥 Fetch single meal
   const { data: meal, isLoading } = useQuery({
     queryKey: ["orderMeal", id],
     queryFn: async () => {
@@ -54,7 +53,6 @@ const OrderPage = () => {
     );
   }
 
-  // 🛒 Confirm Order
   const onSubmit = async (data) => {
   const totalPrice = meal.price * Number(data.quantity);
 
@@ -76,7 +74,7 @@ const OrderPage = () => {
     quantity: Number(data.quantity),
     chefId: meal.chefId,
     paymentStatus: "Pending",
-    userEmail: user.email,          // ✅ FIXED HERE
+    userEmail: user.email,          
     userAddress: data.userAddress,
     orderStatus: "pending",
     orderTime: new Date().toISOString(),
@@ -114,7 +112,7 @@ const OrderPage = () => {
           </div>
         </div>
 
-        {/* Form */}
+    
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Meal name & price */}
           <div className="grid md:grid-cols-2 gap-4">
@@ -139,7 +137,7 @@ const OrderPage = () => {
             </div>
           </div>
 
-          {/* Quantity & Chef ID */}
+         
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Quantity</label>
@@ -166,7 +164,7 @@ const OrderPage = () => {
             </div>
           </div>
 
-          {/* Email & Address */}
+        
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Your Email</label>
@@ -194,7 +192,7 @@ const OrderPage = () => {
             </div>
           </div>
 
-          {/* Total */}
+         
           <div className="flex justify-between items-center mt-4">
             <p className="text-sm">
               Order Status:{" "}

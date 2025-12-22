@@ -14,7 +14,7 @@ const MealsSection = () => {
     },
   });
 
-  // 🔥 দাম কম → বেশি অনুযায়ী sort
+ 
   const sortedMeals = [...meals].sort((a, b) => a.price - b.price);
 
   if (isLoading) {
@@ -22,8 +22,8 @@ const MealsSection = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto py-12 px-4 bg-[#fcf1f1]">
-      {/* Section header */}
+    <section className="max-w-7xl mx-auto py-6 px-4 bg-[#fcf1f1]">
+     
       <div className="flex items-end justify-between mb-6">
         <div>
           <h2 className="text-3xl font-bold">
@@ -43,7 +43,6 @@ const MealsSection = () => {
         </Link>
       </div>
 
-      {/* Meals grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sortedMeals.slice(0, 6).map((meal) => (
           <div
@@ -88,7 +87,7 @@ const MealsSection = () => {
         ))}
       </div>
 
-      {/* Mobile See All */}
+     
       <div className="mt-6 text-center sm:hidden">
         <Link
           to="/meals"
