@@ -1,55 +1,46 @@
-import React, { use } from 'react';
-import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
 
-// IMPORTANT: Swiper er CSS gulo import na korle slides upor niche show korbe
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-import ReviewCard from './ReviewCard';
+import "swiper/css";
+import "swiper/css/pagination";
 
-const Reviews = ({ reviewsPromise }) => {
-  const reviews = use(reviewsPromise);
-  console.log(reviews);
+import ReviewCard from "./ReviewCard";
+
+const Reviews = ({ reviews = [] }) => {
+  if (!Array.isArray(reviews) || reviews.length === 0) {
+    return (
+      <p className="text-center text-gray-500 mt-4">
+        No reviews yet.
+      </p>
+    );
+  }
 
   return (
-    <div className='my-6'>
-      <div className="text-center">
-        <h3 className="text-3xl text-center font-semibold mb-2">What our customers said? </h3>
-      </div>
-
-      <>
-        <Swiper
-          loop={true}
-          effect={'coverflow'}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={3}          // আগে string ছিল, এখন number (same result, just safer)
-          coverflowEffect={{
-            rotate: 30,
-            stretch: '50%',
-            depth: 200,
-            modifier: 1,
-            scale: 0.75,
-            slideShadows: true,
-          }}
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          pagination={true}
-          modules={[EffectCoverflow, Pagination, Autoplay]}
-          className="mySwiper"
-        >
-          {
-            reviews.map(review => <SwiperSlide key={review.id}>
-            <ReviewCard review={review}> </ReviewCard>
-          </SwiperSlide>)
-          }
-          
-        </Swiper>
-      </>
-    </div>
+    <Swiper
+      modules={[Autoplay, Pagination]}
+      spaceBetween={20}
+      slidesPerView={1}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
+      pagination={{ clickable: true }}
+      breakpoints={{
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      }}
+    >
+      {reviews.map((review) => (
+        <SwiperSlide key={review._id}>
+          <ReviewCard review={review} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

@@ -5,6 +5,8 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import Reviews from "../Home/Reviews/Reviews";
+
 
 const MealDetails = () => {
   const { id } = useParams();
@@ -30,58 +32,72 @@ const MealDetails = () => {
   });
 
   // 🔥 fetch reviews
-  const { data: reviews = [] } = useQuery({
-    queryKey: ["reviews", id],
-    enabled: !!meal,
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/reviews?foodId=${id}`);
-      return res.data;
-    },
-  });
+const { data: reviews = [] } = useQuery({
+  queryKey: ["reviews", id],
+  enabled: !!id,
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/reviews?foodId=${id}`);
+    return res.data;
+  },
+});
+
 
   const { register, handleSubmit, reset } = useForm();
 
   const handleReviewSubmit = (data) => {
-    const reviewData = {
-      foodId: id,
-      reviewerName: user.displayName,
-      reviewerImage: user.photoURL,
-      rating: Number(data.rating),
-      comment: data.comment,
-    };
-
-    axiosSecure.post("/reviews", reviewData).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire("Success", "Review submitted successfully!", "success");
-        reset();
-        queryClient.invalidateQueries(["reviews", id]);
-      }
-    });
+  const reviewData = {
+    foodId: id,
+    mealName: meal.foodName,        // ✅ ADD
+    userEmail: user.email,          // ✅ ADD
+    reviewerName: user.displayName,
+    reviewerImage: user.photoURL,
+    rating: Number(data.rating),
+    comment: data.comment,
   };
+
+  axiosSecure.post("/reviews", reviewData).then((res) => {
+    if (res.data.insertedId) {
+      Swal.fire("Success", "Review submitted!", "success");
+      reset();
+      queryClient.invalidateQueries(["reviews", id]);
+      queryClient.invalidateQueries(["my-reviews"]);
+    }
+  });
+};
+
+
 
   // ❤️ Favorite
-  const handleAddFavorite = () => {
-    axiosSecure
-      .get(`/favorites?mealId=${id}&userEmail=${user.email}`)
-      .then((res) => {
-        if (res.data) {
-          Swal.fire("Already Added", "This meal is already in favorites", "info");
-        } else {
-          const favoriteData = {
-            userEmail: user.email,
-            mealId: id,
-            mealName: meal.foodName,
-            chefId: meal.chefId,
-            chefName: meal.chefName,
-            price: meal.price.toString(),
-          };
+ const handleAddFavorite = () => {
+  axiosSecure
+    .get(`/favorites?mealId=${id}&userEmail=${user.email}`)
+    .then((res) => {
 
-          axiosSecure.post("/favorites", favoriteData).then(() => {
-            Swal.fire("Success", "Added to favorites!", "success");
-          });
-        }
+      // ✅ FIX: check _id instead of truthy
+      if (res.data && res.data._id) {
+        Swal.fire(
+          "Already Added",
+          "This meal is already in favorites",
+          "info"
+        );
+        return;
+      }
+
+      const favoriteData = {
+        userEmail: user.email,
+        mealId: id,
+        mealName: meal.foodName,
+        chefId: meal.chefId,
+        chefName: meal.chefName,
+        price: meal.price.toString(),
+      };
+
+      axiosSecure.post("/favorites", favoriteData).then(() => {
+        Swal.fire("Success", "Added to favorites!", "success");
       });
-  };
+    });
+};
+
 
   if (isLoading) {
     return <p className="text-center py-20">Loading...</p>;
@@ -151,26 +167,11 @@ const MealDetails = () => {
       </div>
 
       {/* Reviews */}
-      <div className="bg-white p-6 rounded-xl shadow space-y-4">
-        <h2 className="text-xl font-bold">Reviews</h2>
-
-        {reviews.map((review) => (
-          <div key={review._id} className="border p-3 rounded-lg flex gap-3">
-            <img
-              src={review.reviewerImage}
-              className="w-10 h-10 rounded-full"
-            />
-            <div>
-              <p className="font-semibold">{review.reviewerName}</p>
-              <p className="text-xs text-gray-500">
-                {new Date(review.date).toLocaleString()}
-              </p>
-              <p>⭐ {review.rating}</p>
-              <p>{review.comment}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+     {/* Reviews Section */}
+<div className="bg-white p-6 rounded-xl shadow space-y-4">
+  <h2 className="text-xl font-bold">Reviews</h2>
+  <Reviews reviews={reviews} />
+</div>
 
       {/* Give Review */}
       <form onSubmit={handleSubmit(handleReviewSubmit)} className="space-y-2">
